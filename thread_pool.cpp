@@ -7,6 +7,7 @@
 #include <condition_variable>
 #include <future>
 #include <atomic>
+#include <string>
 #include <functional>
 #include <stdexcept>
 
@@ -85,13 +86,14 @@ int main(int argc, char const *argv[]) {
 	std::vector<std::future<int>> results;
 
 	for (int i = 0; i < 8; i++) {
+		std::string str = "hello";
 		results.emplace_back(
-			pool.commit([i] {
+			pool.commit([](int ii) -> int {
 				// std::cout << "hello " << i << std::endl;
 				std::this_thread::sleep_for(std::chrono::seconds(1));
 				// std::cout << "world " << i << std::endl;
-				return i * i;
-			})
+				return ii * ii;
+			}, i)
 		);
 	}
 
