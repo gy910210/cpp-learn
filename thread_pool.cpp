@@ -53,7 +53,7 @@ public:
 			tasks.emplace([task](){ (*task)(); });
 		}
 
-		condition.notify_all();
+		condition.notify_one();
 		return res;
 	}
 
